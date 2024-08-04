@@ -1,11 +1,13 @@
 import './style.css';
-import { FPS } from './config';
+import { FPS, BALL_START_X } from './config';
+import Background from './Background';
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
+let background: Background;
 
 window.onload = function () {
-  // Loading game elements
+  // Loading game assets
   loadGame();
 
   // Game loop
@@ -15,7 +17,7 @@ window.onload = function () {
   }, 1000 / FPS);
 }
 
-// Loading game elements
+// Loading game assets
 function loadGame() {
   // Get window size
   // let width: number = window.innerWidth;
@@ -23,6 +25,9 @@ function loadGame() {
 
   canvas = document.getElementById("pong") as HTMLCanvasElement;
   ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+  ctx.textAlign = "center";
+
+  background = new Background(canvas.width, canvas.height);
 }
 
 // Update loop
