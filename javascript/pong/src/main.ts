@@ -1,10 +1,14 @@
 import './style.css';
-import { FPS, BALL_START_X } from './config';
+import { FPS, BALL_START_X, PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y } from './config';
 import Background from './Background';
+import Ball from './Ball';
+import Paddle from './Paddle';
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
 let background: Background;
+let ball: Ball;
+let leftPaddle: Paddle;
 
 window.onload = function () {
   // Loading game assets
@@ -28,6 +32,8 @@ function loadGame() {
   ctx.textAlign = "center";
 
   background = new Background(canvas.width, canvas.height);
+  ball = new Ball(BALL_START_X);
+  leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y)
 }
 
 // Update loop
@@ -36,9 +42,7 @@ function update() {
 }
 
 function draw() {
-  ctx.fillStyle = "red";
-  ctx.beginPath();
-  ctx.rect(0, 0, canvas.width, canvas.height);
-  ctx.fill();
+  background.draw(ctx);
+  ball.draw(ctx);
+  leftPaddle.draw(ctx);
 }
-

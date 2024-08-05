@@ -1,35 +1,35 @@
-import { BALL_STYLE } from "./config";
+import { BALL_START_X, BALL_RADIUS, BALL_START_SPEED_X, BALL_START_SPEED_Y, BALL_STYLE } from "./config";
 
 export default class Ball {
-  ballX: number;
-  ballY: number;
-  ballRadius: number;
-  ballSpeedX: number;
-  ballSpeedY: number;
+  x: number;
+  y: number;
+  radius: number;
+  speedX: number;
+  speedY: number;
 
-  constructor(ballX: number, ballY: number, ballRadius: number, ballSpeedX: number, ballSpeedY: number) {
-    this.ballX = ballX;
-    this.ballY = ballY;
-    this.ballRadius = ballRadius;
-    this.ballSpeedX = ballSpeedX;
-    this.ballSpeedY = ballSpeedY;
+  constructor(x: number, y: number = Math.round(Math.random() * 450 + 75), radius: number = BALL_RADIUS, speedX: number = BALL_START_SPEED_X, speedY: number = BALL_START_SPEED_Y) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.speedX = speedX;
+    this.speedY = speedY;
   }
 
   update(canvas: HTMLCanvasElement) {
     // Movement
-    this.ballX += this.ballSpeedX;
-    this.ballY += this.ballSpeedY;
+    this.x += this.speedX;
+    this.y += this.speedY;
 
     // Bounce
-    if (this.ballY > canvas.height || this.ballY < 0) {
-      this.ballSpeedY *= -1;
+    if (this.y > canvas.height || this.y < 0) {
+      this.speedY *= -1;
     }
   }
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = BALL_STYLE;
     ctx.beginPath();
-    ctx.arc(this.ballX, this.ballY, this.ballRadius, 0, Math.PI * 2, true);
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
     ctx.fill();
   }
 }
