@@ -1,4 +1,4 @@
-import { PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_STYLE } from "./config";
+import { PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_STYLE, BALL_START_SPEED_Y } from "./config";
 
 export default class Paddle {
   x: number;
@@ -24,5 +24,9 @@ export default class Paddle {
     ctx.beginPath();
     ctx.rect(this.x, this.y, this.width, this.height);
     ctx.fill();
+  }
+
+  getSpeed(ballY: number) {
+    return Math.round(BALL_START_SPEED_Y * (ballY - (this.y + this.height / 2)) / this.height * 5);
   }
 }

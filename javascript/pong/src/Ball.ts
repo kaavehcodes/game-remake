@@ -1,4 +1,5 @@
 import { BALL_START_X, BALL_RADIUS, BALL_START_SPEED_X, BALL_START_SPEED_Y, BALL_STYLE } from "./config";
+import Paddle from "./Paddle";
 
 export default class Ball {
   x: number;
@@ -31,5 +32,23 @@ export default class Ball {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
     ctx.fill();
+  }
+
+  bounce(paddle: Paddle, canvas: HTMLCanvasElement) {
+    this.speedY = paddle.getSpeed(this.y);
+    this.speedX *= -1;
+
+    if (this.x < canvas.width / 2) {
+      this.x = paddle.x + paddle.width;
+    } else {
+      this.x = paddle.x;
+    }
+  }
+
+  reset() {
+    this.x = BALL_START_X;
+    this.y = Math.round(Math.random() * 450 + 75);
+    this.speedX = BALL_START_SPEED_X;
+    this.speedY = BALL_START_SPEED_Y;
   }
 }

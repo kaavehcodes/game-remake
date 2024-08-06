@@ -9,6 +9,7 @@ let ctx: CanvasRenderingContext2D;
 let background: Background;
 let ball: Ball;
 let leftPaddle: Paddle;
+let rightPaddle: Paddle;
 
 window.onload = function () {
   // Loading game assets
@@ -33,16 +34,18 @@ function loadGame() {
 
   background = new Background(canvas.width, canvas.height);
   ball = new Ball(BALL_START_X);
-  leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y)
+  leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y);
+  rightPaddle = new Paddle(canvas.width - 20, PADDLE_PLAYER_START_Y);
 }
 
 // Update loop
 function update() {
-
+  ball.update(canvas);
 }
 
 function draw() {
   background.draw(ctx);
   ball.draw(ctx);
   leftPaddle.draw(ctx);
+  rightPaddle.draw(ctx);
 }
