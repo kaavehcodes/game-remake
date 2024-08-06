@@ -1,8 +1,10 @@
 import './style.css';
-import { FPS, BALL_START_X, PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y } from './config';
+import { FPS, BALL_START_X, PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y, PADDLE_WIDTH, PADDLE_HEIGHT } from './config';
 import Background from './Background';
 import Ball from './Ball';
 import Paddle from './Paddle';
+import Score from './Score';
+import PaddleAI from './PaddleAI';
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
@@ -35,7 +37,7 @@ function loadGame() {
   background = new Background(canvas.width, canvas.height);
   ball = new Ball(BALL_START_X);
   leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y);
-  rightPaddle = new Paddle(canvas.width - 20, PADDLE_PLAYER_START_Y);
+  rightPaddle = new PaddleAI(800 - PADDLE_WIDTH, 400 - PADDLE_HEIGHT / 2);
 }
 
 // Update loop

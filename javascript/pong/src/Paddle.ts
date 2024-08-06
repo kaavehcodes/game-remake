@@ -1,3 +1,4 @@
+import Ball from "./Ball";
 import { PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_STYLE, BALL_START_SPEED_Y } from "./config";
 
 export default class Paddle {
@@ -15,7 +16,7 @@ export default class Paddle {
     this.speedY = speedY;
   }
 
-  update() {
+  update(ball?: Ball) {
     this.y += this.speedY;
   }
 
