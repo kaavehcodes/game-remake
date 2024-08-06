@@ -92,6 +92,10 @@ function update() {
       } else {
         if (ball.x < 0) {
           score.playerTwoScores();
+          // Reset ball unless the game is ended
+          if (checkScore() == 0) {
+            ball.reset();
+          }
         }
       }
     }
@@ -100,30 +104,35 @@ function update() {
     if (ball.x > canvas.width - rightPaddle.width) {
       if (ball.y >= rightPaddle.y - ball.radius / 2 && ball.y <= rightPaddle.y + rightPaddle.height + ball.radius / 2) {
         ball.bounce(rightPaddle, canvas);
-        console.log("Collide with player two");
-
       } else {
         if (ball.x > canvas.width) {
           score.playerOneScores();
-          console.log("Player two missed");
+          if (checkScore() == 0) {
+            ball.reset();
+          }
         }
       }
     }
   }
-
-
 }
 
 function draw() {
-  background.draw(ctx);
-  ball.draw(ctx);
-  leftPaddle.draw(ctx);
-  rightPaddle.draw(ctx);
+  if (gameState == 0) {
+    background.draw(ctx);
+    ball.draw(ctx);
+    leftPaddle.draw(ctx);
+    rightPaddle.draw(ctx);
+  }
+
+  showScore(ctx);
 }
 
 // Reset the game
 function reset() {
+  score.reset();
   ball.reset();
+  gameEnded = false;
+  gameState = 0;
 }
 
 // Get mouse position on canvas
@@ -137,6 +146,11 @@ function getMousePosition(event: MouseEvent) {
     x: mouseX,
     y: mouseY
   }
+}
+
+// Show score
+function showScore(ctx: CanvasRenderingContext2D) {
+  ctx.fillText(score.playerOneScore + " : " + score.playerTwoScore, canvas.width / 2, 20);
 }
 
 // Check score

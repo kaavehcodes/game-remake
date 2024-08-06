@@ -45,6 +45,11 @@ export default class Ball {
     }
   }
 
+  // Accelerate each time ball is hit
+  accelerate() {
+    this.speedX = this.speedX + 1 * Math.sign(this.speedX);
+  }
+
   reset() {
     this.x = BALL_START_X;
     this.y = Math.round(Math.random() * 450 + 75);
