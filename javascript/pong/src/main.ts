@@ -17,6 +17,12 @@ window.onload = function () {
   // Loading game assets
   loadGame();
 
+  // Manage player input
+  canvas.addEventListener("mousemove", (event: MouseEvent) => {
+    let mousePos = getMousePosition(event);
+    leftPaddle.y = mousePos.y - (leftPaddle.height / 2);
+  })
+
   // Game loop
   setInterval(() => {
     update();
@@ -43,6 +49,8 @@ function loadGame() {
 // Update loop
 function update() {
   ball.update(canvas);
+  leftPaddle.update();
+  rightPaddle.update(ball);
 }
 
 function draw() {
@@ -50,4 +58,22 @@ function draw() {
   ball.draw(ctx);
   leftPaddle.draw(ctx);
   rightPaddle.draw(ctx);
+}
+
+// Reset the game
+function reset() {
+  ball.reset();
+}
+
+// Get mouse position on canvas
+function getMousePosition(event: MouseEvent) {
+  let clientBCRect = canvas.getBoundingClientRect();
+  let root = document.documentElement;
+  let mouseX = event.clientX - clientBCRect.left - root.scrollLeft;
+  let mouseY = event.clientY - clientBCRect.top - root.scrollTop;
+
+  return {
+    x: mouseX,
+    y: mouseY
+  }
 }
