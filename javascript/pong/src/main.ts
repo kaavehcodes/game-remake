@@ -69,7 +69,13 @@ function update() {
   // When game ends
   if (gameState != 0) {
     if (!gameEnded) {
-
+      showEndScreen(ctx);
+      canvas.addEventListener("click", (event: MouseEvent) => {
+        if (gameState != 0) {
+          reset();
+        }
+      });
+      gameEnded = true;
     }
     return;
   }
@@ -162,4 +168,20 @@ function checkScore() {
   } else {
     return 0;
   }
+}
+
+// Show end game screen
+function showEndScreen(ctx: CanvasRenderingContext2D) {
+  background.draw(ctx);
+  ctx.fillStyle = "white";
+
+  if (gameState == 1) {
+    ctx.fillText("player One Wins!", canvas.width / 2, canvas.height / 2);
+  } else if (gameState == 2) {
+    ctx.fillText("Player Two Wins!", canvas.width / 2, canvas.height / 2);
+  }
+
+  setTimeout(() => {
+    ctx.fillText("Click to play again", canvas.width / 2, canvas.height / 2 + 50);
+  }, 1000);
 }
