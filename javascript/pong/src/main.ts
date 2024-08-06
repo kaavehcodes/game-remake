@@ -68,6 +68,9 @@ function update() {
 
   // When game ends
   if (gameState != 0) {
+    if (!gameEnded) {
+
+    }
     return;
   }
 
@@ -76,6 +79,9 @@ function update() {
     ball.update(canvas);
     leftPaddle.update();
     rightPaddle.update(ball);
+
+    console.log(leftPaddle.width);
+    console.log(ball.x);
 
     // Collision detection
     if (ball.x <= leftPaddle.width) {
@@ -88,18 +94,18 @@ function update() {
           score.playerTwoScores();
         }
       }
+    }
 
-      // Player Two
-      if (ball.x > canvas.width - rightPaddle.width) {
-        if (ball.y >= rightPaddle.y - ball.radius / 2 && ball.y <= rightPaddle.y + rightPaddle.height + ball.radius / 2) {
-          ball.bounce(rightPaddle, canvas);
-          console.log("Collide with player two");
+    // Player Two
+    if (ball.x > canvas.width - rightPaddle.width) {
+      if (ball.y >= rightPaddle.y - ball.radius / 2 && ball.y <= rightPaddle.y + rightPaddle.height + ball.radius / 2) {
+        ball.bounce(rightPaddle, canvas);
+        console.log("Collide with player two");
 
-        } else {
-          if (ball.x > canvas.width) {
-            score.playerOneScores();
-            console.log("Player two missed");
-          }
+      } else {
+        if (ball.x > canvas.width) {
+          score.playerOneScores();
+          console.log("Player two missed");
         }
       }
     }
