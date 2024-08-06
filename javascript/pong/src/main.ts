@@ -3,8 +3,8 @@ import { FPS, BALL_START_X, PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y, PADDLE
 import Background from './Background';
 import Ball from './Ball';
 import Paddle from './Paddle';
-import Score from './Score';
 import PaddleAI from './PaddleAI';
+import Score from './Score';
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
@@ -12,6 +12,8 @@ let background: Background;
 let ball: Ball;
 let leftPaddle: Paddle;
 let rightPaddle: Paddle;
+let score: Score;
+let gameState: number;
 
 window.onload = function () {
   // Loading game assets
@@ -21,7 +23,15 @@ window.onload = function () {
   canvas.addEventListener("mousemove", (event: MouseEvent) => {
     let mousePos = getMousePosition(event);
     leftPaddle.y = mousePos.y - (leftPaddle.height / 2);
-  })
+  });
+
+  document.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (event.key === "w") {
+      leftPaddle.y -= 13;
+    } else if (event.key === "s") {
+      leftPaddle.y += 13;
+    }
+  });
 
   // Game loop
   setInterval(() => {
@@ -44,13 +54,43 @@ function loadGame() {
   ball = new Ball(BALL_START_X);
   leftPaddle = new Paddle(PADDLE_PLAYER_START_X, PADDLE_PLAYER_START_Y);
   rightPaddle = new PaddleAI(800 - PADDLE_WIDTH, 400 - PADDLE_HEIGHT / 2);
+
+  score = new Score();
 }
 
 // Update loop
 function update() {
+
   ball.update(canvas);
   leftPaddle.update();
   rightPaddle.update(ball);
+
+  // Collision detection
+  if (ball.x <= leftPaddle.width) {
+    // Ball collides with paddle
+    // Player One
+    if (ball.y >= leftPaddle.y - ball.radius / 2 && ball.y <= leftPaddle.y + leftPaddle.height + ball.radius / 2) {
+      ball.bounce(leftPaddle, canvas);
+    } else {
+      if (ball.x < 0) {
+        score.playerTwoScores();
+      }
+    }
+
+    // Player Two
+    if (ball.x > canvas.width - rightPaddle.width) {
+      if (ball.y >= rightPaddle.y - ball.radius / 2 && ball.y <= rightPaddle.y + rightPaddle.height + ball.radius / 2) {
+        ball.bounce(rightPaddle, canvas);
+        console.log("Collide with player two");
+
+      } else {
+        if (ball.x > canvas.width) {
+          score.playerOneScores();
+          console.log("Player two missed");
+        }
+      }
+    }
+  }
 }
 
 function draw() {
@@ -76,4 +116,9 @@ function getMousePosition(event: MouseEvent) {
     x: mouseX,
     y: mouseY
   }
+}
+
+// Check score
+function checkScore() {
+
 }
