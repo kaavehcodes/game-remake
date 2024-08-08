@@ -11,3 +11,9 @@ export const BALL_START_SPEED_X = 8;
 export const BALL_START_SPEED_Y = 6;
 export const BALL_RADIUS = 10;
 export const BALL_STYLE = "white";
+
+// Paddle
+export const PADDLE_WIDTH = 150;
+export const PADDLE_HEIGHT = 20;
+export const PADDLE_START_X = 400;
+export const PADDLE_START_Y = 540;
